@@ -1,0 +1,40 @@
+{
+  "name": "atomi-migration",
+  "description": "MySQL migration for Atomi",
+  "scripts": {
+    "start": "node --max-old-space-size=8192 index.js",
+    "deploy": "gcloud functions deploy atomiFunction --region=europe-west3 --trigger-topic atomi-migration-function --runtime=nodejs14 --memory=512MB --ingress-settings internal-only --vpc-connector atomi-svpc --egress-settings all --entry-point main --set-env-vars PRODUCTION=true",
+    "lint": "./node_modules/.bin/eslint . --fix"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "@google-cloud/bigquery": "^5.9.3",
+    "csv-writer": "^1.6.0",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.14.6",
+    "@babel/eslint-parser": "^7.14.7",
+    "eslint": "^7.30.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "husky": "^7.0.1",
+    "lint-staged": "^11.0.0",
+    "prettier": "^2.3.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/*.js": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "engines": {
+    "node": "14"
+  }
+}

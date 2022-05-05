@@ -1,2 +1,6 @@
+require('dotenv').config();
+
 const { main } = require("./src/functions");
-module.exports = { main };
+(async () => await main())();
+// process.exit(1);
+// module.exports = { main };

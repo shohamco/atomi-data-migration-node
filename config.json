@@ -1,0 +1,101 @@
+{
+    "totalPotentials": {
+    },
+    "purchasesAndRejections": {
+        "purchaseId": 67,
+        "rejectionId": 52
+    },
+    "removal": {
+        "segmentIds": [113]
+    },
+    "emails": {
+        "inputs": [
+            {
+                "name": "01- All Potentials",
+                "emailIds": [51, 85, 90, 91, 92]
+            },
+            {
+                "name": "03- 24 hours after immediately",
+                "emailIds": [93, 94]
+            },
+            {
+                "name": "04- 48 hours after immediately",
+                "emailIds": [86, 52]
+            },
+            {
+                "name": "06- 14 days before insurance start",
+                "emailIds": [53]
+            },
+            {
+                "name": "07- 7 days before insurance starts",
+                "emailIds": [54]
+            },
+            {
+                "name": "08- 72 hours to insurance day",
+                "emailIds": [55, 87]
+            },
+            {
+                "name": "09- 48 hours to insurance day",
+                "emailIds": [56, 88]
+            },
+            {
+                "name": "10- 24 hours to insurance day",
+                "emailIds": [57, 89]
+            }
+        ]
+    },
+    "messages": {
+        "inputs": [
+            {
+                "name": "01- All Potentials",
+                "messageIds": [38, 37, 39, 40, 41],
+                "pageIds": [3, 43, 44]
+            },
+            {
+                "name": "02- Day Insurance Start",
+                "messageIds": [42],
+                "pageIds": [16]
+            },
+            {
+                "name": "03- 24 hours after immediately",
+                "messageIds": [4, 23],
+                "pageIds": [48, 8, 15]
+            },
+            {
+                "name": "04- 48 hours after immediately",
+                "messageIds": [17, 24],
+                "pageIds": [49, 9, 14]
+            },
+            {
+                "name": "05- 72 hours after immediately",
+                "messageIds": [18, 25],
+                "pageIds": [50, 10]
+            },
+            {
+                "name": "06- 14 days before insurance start",
+                "messageIds": [6],
+                "pageIds": [11]
+            },
+            {
+                "name": "07- 7 days before insurance starts",
+                "messageIds": [7],
+                "pageIds": [51]
+            },
+            {
+                "name": "08- 72 hours to insurance day",
+                "messageIds": [16, 19],
+                "pageIds": [13]
+            },
+            {
+                "name": "09- 48 hours to insurance day",
+                "messageIds": [20, 15],
+                "pageIds": [14]
+            },
+            {
+                "name": "10- 24 hours to insurance day",
+                "messageIds": [21, 14],
+                "pageIds": [15]
+            }
+        ]
+    }
+}

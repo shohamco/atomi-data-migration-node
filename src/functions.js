@@ -1,56 +1,34 @@
-const {
-  createConnection,
-  createJob,
-  MYSQL_DATABASE,
-} = require("./connection.js");
-const {
-  mainTableQuery,
-  segmentsTableQuery,
-  pagesTableQuery,
-  segmentsTableQueryAll
-} = require("./queries.js");
+const { createObjectCsvWriter } = require("csv-writer");
+const { connection } = require('./connection');
+const reportConfig = require('../config.json');
+const queries = require('./queries');
 
-const mainExecution = async (mysqlConnection, bigqueryConnection) => {
-  const mainQuery = mainTableQuery(MYSQL_DATABASE);
-  await createJob(
-    { mysqlConnection, bigqueryConnection },
-    "mainTable",
-    "/tmp/mainTable.csv",
-    mainQuery
-  );
+const createCSV = async ({path, fields, rows}) => {
+  const header = fields.map(field => ({
+    id: field.name, title: field.name
+  }));
+  await createObjectCsvWriter({ path, header, fieldDelimiter: ';' }).writeRecords(rows);
+}
 
-  const pagesQuery = pagesTableQuery(MYSQL_DATABASE);
-  await createJob(
-    { mysqlConnection, bigqueryConnection },
-    "pagesTable",
-    "/tmp/pagesTable.csv",
-    pagesQuery
-  );
 
-  const segmentsQuery = segmentsTableQuery(MYSQL_DATABASE);
-  await createJob(
-    { mysqlConnection, bigqueryConnection },
-    "segmentsTable",
-    "/tmp/segmentsTable.csv",
-    segmentsQuery
-  );
-
-  const segmentsQueryAll = segmentsTableQueryAll(MYSQL_DATABASE);
-  await createJob(
-    { mysqlConnection, bigqueryConnection },
-    "segmentsTableAll",
-    "/tmp/segmentsTableAll.csv",
-    segmentsQueryAll
-  );
-};
-
-const main = async (req, res) => {
+const main = async (_, __) => {
   try {
-    await createConnection(mainExecution);
-    console.log({ msg: "Task finished" });
-  } catch (e) {
-    console.log({ msg: "Error", error: JSON.stringify(e) });
-  }
-};
+    await connection.query(queries.setReportDate('2022-04-05'));
 
-module.exports = { main };
+    for (const key in reportConfig) {
+      if (key in queries && typeof queries[key] === "function") {
+        const [rows, fields] = await connection.query(queries[key](reportConfig[key]));
+        await createCSV({ path: `./tmp/${key}.csv`, fields, rows });
+      }
+    }
+    console.log('Finished');
+  } catch (e) {
+    console.error(e.message);
+  } finally {
+    connection.end();
+  }
+}
+
+module.exports = {
+  main
+}

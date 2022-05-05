@@ -10,7 +10,8 @@
   "dependencies": {
     "@google-cloud/bigquery": "^5.9.3",
     "csv-writer": "^1.6.0",
-    "mysql": "^2.18.1"
+    "dotenv": "^16.0.0",
+    "mysql2": "^2.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.14.6",

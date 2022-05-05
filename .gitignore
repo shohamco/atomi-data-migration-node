@@ -2,3 +2,6 @@ atomi*.json
 node_modules
 yarn.lock
 sql_queries
+.env
+.idea
+tmp/*

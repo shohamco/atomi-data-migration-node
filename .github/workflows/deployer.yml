@@ -17,7 +17,7 @@ jobs:
 
         steps:
             # checkout to our repository so we have access to the source code
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v3
 
             - id: auth
               uses: google-github-actions/auth@v0
@@ -32,7 +32,7 @@ jobs:
                   name: atomi-wobi-stat
                   description: Wobi statistic # nullable
                   region: europe-central2
-                  source_dir: /
+                  source_dir: src
                   # name of our function in our main.py file, defaults to the resource name suffix
                   entry_point: main
                   # runtime to use for the function

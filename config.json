@@ -20,7 +20,7 @@
             },
             {
                 "name": "04- 48 hours after immediately",
-                "emailIds": [86, 52]
+                "emailIds": [0]
             },
             {
                 "name": "06- 14 days before insurance start",
@@ -48,12 +48,12 @@
         "inputs": [
             {
                 "name": "01- All Potentials",
-                "messageIds": [38, 37, 39, 40, 41],
-                "pageIds": [3, 43, 44]
+                "messageIds": [38, 37, 46, 47, 48],
+                "pageIds": [3, 43, 44, 54, 55]
             },
             {
                 "name": "02- Day Insurance Start",
-                "messageIds": [42],
+                "messageIds": [45],
                 "pageIds": [16]
             },
             {

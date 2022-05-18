@@ -4,8 +4,9 @@ const totalPotentials = () => `
   SELECT @reportDate reportDate,
        COUNT(*) totalPotentials
   FROM leads
-  WHERE DATE(date_identified) = @reportDate
-  `;
+  WHERE DATE(date_added) = @reportDate
+    AND date_identified IS NOT NULL
+`;
 
 const purchasesAndRejections = ({purchaseId, rejectionId}) => `
 SELECT @reportDate reportDate,
@@ -22,15 +23,15 @@ WHERE DATE(date_added)=@reportDate
 const emails = ({inputs}) => {
   const sql = ({name, emailIds}) => `
   SELECT @reportDate reportDate,
-       '${name}' rowTitle,
+       '${name}' periodOfTime,
        es.email_id,
        es.lead_id,
        es.date_sent,
        IF(DATE(es.date_sent)=@reportDate, 'send', null) isSend,
        es.date_read,
-       IF(DATE(es.date_read)=@reportDate, 'read', null) isRead,
+       IF(DATE(es.date_read)=@reportDate, 'clicked', null) isClicked,
        ph.date_hit clickDate,
-       null isClicked
+       null isRead
 FROM email_stats es
          LEFT JOIN (
     SELECT MAX(date_hit) date_hit, email_id, lead_id
@@ -47,15 +48,15 @@ GROUP BY es.lead_id, es.date_sent, es.date_read, ph.date_hit, es.email_id
 UNION ALL
 
 SELECT @reportDate reportDate,
-       '${name}' rowTitle,
+       '${name}' periodOfTime,
        es.email_id,
        es.lead_id,
        es.date_sent,
        null isSend,
        es.date_read,
-       NULL isRead,
+       NULL isClicked,
        ph.date_hit clickDate,
-       IF(DATE(ph.date_hit)=@reportDate, 'clicked', null) isClicked
+       IF(DATE(ph.date_hit)=@reportDate, 'read', null) isRead
 FROM page_hits ph
          INNER JOIN email_stats es on ph.email_id = es.email_id AND ph.lead_id = es.lead_id
 WHERE DATE(ph.date_hit) = @reportDate
@@ -69,7 +70,7 @@ const messages = ({inputs}) => {
   const sql = ({name, messageIds, pageIds}) => `
   SELECT
     @reportDate reportDate,
-    '${name}' rowTitle,
+    '${name}' periodOfTime,
     ph.lead_id leadId,
     vms.message_id messageId,
     vm.name messageTitle,
@@ -91,7 +92,7 @@ WHERE ph.page_id IN (${pageIds.join(',')})
 GROUP BY leadId, messageId, vm.name, ph.page_id
 UNION
 SELECT @reportDate reportDate,
-       '${name}' rowTitle,
+       '${name}' periodOfTime,
        vms.lead_id leadId,
        vm.id messageId,
        vm.name messageTitle,

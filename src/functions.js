@@ -1,5 +1,7 @@
 const { createObjectCsvWriter } = require("csv-writer");
+const moment = require('moment');
 const { connection } = require('./connection');
+const { saveDataset } = require('./bigQuery');
 const reportConfig = require('../config.json');
 const queries = require('./queries');
 
@@ -13,19 +15,22 @@ const createCSV = async ({path, fields, rows}) => {
 
 const main = async (_, __) => {
   try {
-    await connection.query(queries.setReportDate('2022-04-05'));
+    const date = moment().subtract(1, 'days').format('YYYY-MM-DD')
+    await connection.query(queries.setReportDate(date));
 
     for (const key in reportConfig) {
       if (key in queries && typeof queries[key] === "function") {
         const [rows, fields] = await connection.query(queries[key](reportConfig[key]));
-        await createCSV({ path: `./tmp/${key}.csv`, fields, rows });
+        const path = `./tmp/${key}.csv`;
+        await createCSV({ path, fields, rows });
+        await saveDataset(path, key);
       }
     }
     console.log('Finished');
   } catch (e) {
     console.error(e.message);
   } finally {
-    connection.end();
+    await connection.end();
   }
 }
 

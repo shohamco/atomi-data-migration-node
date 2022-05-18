@@ -8,11 +8,11 @@ on:
 
 jobs:
 
-    permissions: write-all
-
     run:
         # worker runs on latest ubuntu
         runs-on: ubuntu-latest
+
+        permissions: read-all|write-all
 
         steps:
             # checkout to our repository so we have access to the source code

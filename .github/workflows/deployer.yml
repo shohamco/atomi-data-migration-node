@@ -7,6 +7,9 @@ on:
             - master
 
 jobs:
+
+    permissions: 'write-all'
+
     run:
         # worker runs on latest ubuntu
         runs-on: ubuntu-latest
@@ -27,7 +30,7 @@ jobs:
               with:
                   name: atomi-wobi-stat
                   description: Wobi statistic # nullable
-                  region: europe-west1
+                  region: europe-central2
                   source_dir: /
                   # name of our function in our main.py file, defaults to the resource name suffix
                   entry_point: main

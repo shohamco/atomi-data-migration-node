@@ -6,7 +6,7 @@ const createBigQueryConnection = () => {
   const settings = {
     projectId: BIGQUERY_PROJECTID
   };
-  if (NODE_ENV === "production") {
+  if (NODE_ENV !== "production") {
     settings.keyFilename = BIGQUERY_KEYFILE;
   }
 

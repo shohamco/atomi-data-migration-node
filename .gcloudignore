@@ -17,5 +17,6 @@
 node_modules
 
 atomi-*.json
+gha-creds-*.json
 sql_queries/*
 .env

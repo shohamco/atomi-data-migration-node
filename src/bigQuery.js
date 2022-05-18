@@ -6,7 +6,7 @@ const createBigQueryConnection = () => {
   const settings = {
     projectId: BIGQUERY_PROJECTID
   };
-  if (NODE_ENV !== "production") {
+  if (NODE_ENV === "development") {
     settings.keyFilename = BIGQUERY_KEYFILE;
   }
 
@@ -17,6 +17,7 @@ const bigQueryMetaData = {
   writeDisposition: "WRITE_TRUNCATE",
   autodetect: true,
   sourceFormat: "CSV",
+  fieldDelimiter: ';',
   skipLeadingRows: 1,
   allowJaggedRows: true,
   allowQuotedNewlines: true,

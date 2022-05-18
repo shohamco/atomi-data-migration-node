@@ -11,6 +11,8 @@
 # from your .gitignore file, remove the corresponding line
 # below:
 .git
+.github
+.idea
 .gitignore
 node_modules
 

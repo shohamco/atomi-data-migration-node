@@ -27,7 +27,6 @@ jobs:
               with:
                   name: atomi-wobi-stat
                   description: Wobi statistic # nullable
-                  project_id: ${{ secrets.GCP_PROJECT_ID }}
                   region: europe-west1
                   source_dir: /
                   # name of our function in our main.py file, defaults to the resource name suffix

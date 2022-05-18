@@ -21,7 +21,7 @@ const main = async (_, __) => {
     for (const key in reportConfig) {
       if (key in queries && typeof queries[key] === "function") {
         const [rows, fields] = await connection.query(queries[key](reportConfig[key]));
-        const path = `./tmp/${key}.csv`;
+        const path = `/tmp/${key}.csv`;
         await createCSV({ path, fields, rows });
         await saveDataset(path, key);
       }

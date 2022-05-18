@@ -8,7 +8,7 @@ on:
 
 jobs:
 
-    permissions: 'write-all'
+    permissions: write-all
 
     run:
         # worker runs on latest ubuntu

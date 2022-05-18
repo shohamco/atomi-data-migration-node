@@ -15,15 +15,18 @@ const createCSV = async ({path, fields, rows}) => {
 
 const main = async (_, __) => {
   try {
-    const date = moment().subtract(1, 'days').format('YYYY-MM-DD')
+    const date = moment().subtract(1, 'days').format('YYYY-MM-DD');
+    console.log('report date: ', date);
     await connection.query(queries.setReportDate(date));
 
     for (const key in reportConfig) {
       if (key in queries && typeof queries[key] === "function") {
+        console.log('Report: ', key);
         const [rows, fields] = await connection.query(queries[key](reportConfig[key]));
         const path = `/tmp/${key}.csv`;
         await createCSV({ path, fields, rows });
         await saveDataset(path, key);
+        console.log('Done');
       }
     }
     console.log('Finished');

@@ -32,11 +32,11 @@ jobs:
                   name: atomi-wobi-stat
                   description: Wobi statistic # nullable
                   region: europe-central2
-                  source_dir: src
+#                  source_dir: src
                   # name of our function in our main.py file, defaults to the resource name suffix
                   entry_point: main
                   # runtime to use for the function
-                  runtime: node16
+                  runtime: nodejs16
                   # the function execution timeout
                   timeout: 60
                   # the maximum number of instances for the function.

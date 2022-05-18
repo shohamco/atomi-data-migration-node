@@ -9,10 +9,11 @@ on:
 jobs:
 
     run:
+        permissions:
+            contents: 'read'
+            id-token: 'write'
         # worker runs on latest ubuntu
         runs-on: ubuntu-latest
-
-        permissions: write-all
 
         steps:
             # checkout to our repository so we have access to the source code

@@ -45,4 +45,5 @@ jobs:
                   event_trigger_resource: projects/${{ secrets.GCP_PROJECT_ID }}/topics/${{ secrets.GCP_TOPIC_ID }}
                   # optional configs, see google-cloud-actions/deploy-cloud-functions for full reference
                   # list of key-value pairs to set as environment variables in the form KEY1=VALUE1,KEY2=VALUE2.
-#       env_vars: # optional
+                  env_vars: DB_HOST=${{ env.DB_HOST }},DB_PORT=${{ env.DB_PORT }},DB_USER=${{ env.DB_USER }},DB_PASS=${{ env.DB_PASS }},DB_NAME=${{ env.DB_NAME }}
+

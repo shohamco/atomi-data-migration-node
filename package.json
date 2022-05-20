@@ -3,12 +3,14 @@
   "description": "MySQL migration for Atomi",
   "scripts": {
     "start": "node --max-old-space-size=8192 index.js",
+    "start:dev": "cross-env NODE_ENV=development node index-dev.js",
     "deploy": "gcloud functions deploy atomiFunction --region=europe-west3 --trigger-topic atomi-migration-function --runtime=nodejs14 --memory=512MB --ingress-settings internal-only --vpc-connector atomi-svpc --egress-settings all --entry-point main --set-env-vars PRODUCTION=true",
     "lint": "./node_modules/.bin/eslint . --fix"
   },
   "main": "index.js",
   "dependencies": {
     "@google-cloud/bigquery": "^5.9.3",
+    "cross-env": "^7.0.3",
     "csv-writer": "^1.6.0",
     "dotenv": "^16.0.0",
     "moment": "^2.29.3",

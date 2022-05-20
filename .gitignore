@@ -5,3 +5,4 @@ sql_queries
 .env
 .idea
 tmp/*
+index-dev.js

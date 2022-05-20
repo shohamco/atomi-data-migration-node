@@ -14,7 +14,7 @@ const createBigQueryConnection = () => {
 };
 
 const bigQueryMetaData = {
-  writeDisposition: "WRITE_TRUNCATE",
+  // writeDisposition: "WRITE_TRUNCATE",
   autodetect: true,
   sourceFormat: "CSV",
   fieldDelimiter: ';',
@@ -39,6 +39,14 @@ const saveDataset = async (path, tableName) => {
     console.error('BigQuery', e);
   }
 }
+
+// const deleteRows = () => {
+//   try {
+//
+//   } catch (e) {
+//     console.error('BigQuery', e);
+//   }
+// }
 
 module.exports = {
   saveDataset

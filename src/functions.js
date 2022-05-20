@@ -13,9 +13,9 @@ const createCSV = async ({path, fields, rows}) => {
 }
 
 
-const main = async (_, __) => {
+const main = async (reportDate = null) => {
   try {
-    const date = moment().subtract(1, 'days').format('YYYY-MM-DD');
+    const date = reportDate || moment().subtract(2, 'days').format('YYYY-MM-DD');
     console.log('report date: ', date);
     await connection.query(queries.setReportDate(date));
 

@@ -13,7 +13,7 @@ const createCSV = async ({path, fields, rows}) => {
 }
 
 
-const main = async (reportDate = null) => {
+const main = async ({reportDate = null}) => {
   try {
     const date = reportDate || moment().subtract(2, 'days').format('YYYY-MM-DD');
     console.log('report date: ', date);

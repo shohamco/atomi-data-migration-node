@@ -104,10 +104,10 @@ SELECT @reportDate reportDate,
 FROM vonage_message_stats vms
          LEFT JOIN vonage_messages vm ON vm.id = vms.message_id
          LEFT JOIN (
-    SELECT DISTINCT lead_id, MAX(date_hit) date_hit,  page_id
+    SELECT DISTINCT lead_id, MAX(date_hit) date_hit, MAX(page_id) page_id
     FROM page_hits
     WHERE page_id IN (${pageIds.join(',')})
-    GROUP BY lead_id, page_id
+    GROUP BY lead_id
 ) ph ON ph.lead_id = vms.lead_id
 WHERE (DATE(vms.date_sent) = @reportDate OR DATE(ph.date_hit) = @reportDate)
   AND vm.id IN (${messageIds.join(',')})

@@ -23,7 +23,7 @@ const main = async ({reportDate = null}) => {
       if (key in queries && typeof queries[key] === "function") {
         console.log('Report: ', key);
         const [rows, fields] = await connection.query(queries[key](reportConfig[key]));
-        const path = `/tmp/${key}.csv`;
+        const path = (process.env.NODE_ENV === 'development' ? '.' : '') + `/tmp/${key}.csv`;
         await createCSV({ path, fields, rows });
         await deleteRows(key, { reportDate: date })
         await saveDataset(path, key);

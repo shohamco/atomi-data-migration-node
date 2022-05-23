@@ -13,20 +13,19 @@ const createBigQueryConnection = () => {
   return new BigQuery(settings);
 };
 
-const bigQueryMetaData = {
-  // writeDisposition: "WRITE_TRUNCATE",
-  autodetect: true,
-  sourceFormat: "CSV",
-  fieldDelimiter: ';',
-  skipLeadingRows: 1,
-  allowJaggedRows: true,
-  allowQuotedNewlines: true,
-  ignoreUnknownValues: true,
-};
-
 const bigqueryConnection = createBigQueryConnection();
 
 const saveDataset = async (path, tableName) => {
+  const bigQueryMetaData = {
+    // writeDisposition: "WRITE_TRUNCATE",
+    autodetect: true,
+    sourceFormat: "CSV",
+    fieldDelimiter: ';',
+    skipLeadingRows: 1,
+    allowJaggedRows: true,
+    allowQuotedNewlines: true,
+    ignoreUnknownValues: true,
+  };
   try {
     await bigqueryConnection
       .dataset(BIGQUERY_DATASET)
@@ -40,14 +39,23 @@ const saveDataset = async (path, tableName) => {
   }
 }
 
-// const deleteRows = () => {
-//   try {
-//
-//   } catch (e) {
-//     console.error('BigQuery', e);
-//   }
-// }
+const deleteRows = async (table, condition = {}) => {
+  let query = `DELETE FROM ${BIGQUERY_DATASET}.${table}`
+  const where = [];
+  for (const key in condition) {
+    where.push(`${key} = '${condition[key]}'`);
+  }
+  if (where.length) {
+    query += ` WHERE ${where.join(' AND ')}`;
+  }
+
+  try {
+    await bigqueryConnection.query(query);
+  } catch (e) {
+    console.error('BigQuery', e);
+  }
+}
 
 module.exports = {
-  saveDataset
+  saveDataset, deleteRows
 }

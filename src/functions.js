@@ -1,7 +1,7 @@
 const { createObjectCsvWriter } = require("csv-writer");
 const moment = require('moment');
 const { connection } = require('./connection');
-const { saveDataset } = require('./bigQuery');
+const { saveDataset, deleteRows } = require('./bigQuery');
 const reportConfig = require('../config.json');
 const queries = require('./queries');
 
@@ -23,8 +23,9 @@ const main = async ({reportDate = null}) => {
       if (key in queries && typeof queries[key] === "function") {
         console.log('Report: ', key);
         const [rows, fields] = await connection.query(queries[key](reportConfig[key]));
-        const path = `/tmp/${key}.csv`;
+        const path = `./tmp/${key}.csv`;
         await createCSV({ path, fields, rows });
+        await deleteRows(key, { reportDate: date })
         await saveDataset(path, key);
         console.log('Done');
       }
